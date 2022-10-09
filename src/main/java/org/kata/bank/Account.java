@@ -11,8 +11,11 @@ public class Account {
         balance += amount;
     }
 
-    public void withdraw() {
-
+    public void withdraw(double amount) {
+        if (amount <= 0 || amount > balance) {
+            throw new IllegalArgumentException();
+        }
+        balance -= amount;
     }
 
     public void showHistory() {

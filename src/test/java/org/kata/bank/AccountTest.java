@@ -35,4 +35,36 @@ class AccountTest {
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> account.deposit(-1000));
     }
 
+    //US2: In order to retreive some or all my savings As a bank client I want to make a withdraw from my account
+    @Test
+    void withdrawnAmountShouldBeDeductedFromCurrentBalance() {
+        //given
+        Account account = new Account();
+        account.deposit(2000);
+        //when
+        account.withdraw(1000);
+        //then
+        assertThat(account.balance).isEqualTo(1000);
+    }
+
+    @Test
+    void withdrawZeroShouldThrowIllegalException() {
+        Account account = new Account();
+        account.deposit(2000);
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> account.withdraw(0));
+    }
+
+    @Test
+    void withdrawNegativeAmountShouldThrowIllegalException() {
+        Account account = new Account();
+        account.deposit(2000);
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> account.withdraw(-1000));
+    }
+
+    @Test
+    void withdrawnAmountShouldBeLowerThanAmountInBalance() {
+        Account account = new Account();
+        account.deposit(2000);
+        assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> account.withdraw(3000));
+    }
 }
